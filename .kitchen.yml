@@ -1,0 +1,42 @@
+---
+driver:
+  name: vagrant
+  customize:
+    memory: 4096
+    vram: 64
+    natdnshostresolver1: "on"
+    natdnsproxy1: "on"
+    nictype1: "virtio"
+
+provisioner:
+  name: chef_solo
+  require_chef_omnibus: false
+
+platforms:
+    - name: ubuntu-14.04
+      driver:
+        gui: true
+        box: pingworks_ubuntu-14.04_chef-12.7.2-1
+        box_url: http://vagrant.pingworks.net/pingworks_ubuntu-14.04_chef-12.7.2-1.box
+suites:
+  - name: master
+    run_list:
+      - recipe[pw_testhelper]
+      - recipe[pw_jenkins::master]
+    attributes:
+    driver:
+      network:
+        - [ 'forwarded_port', { guest: 8080, host: 8080 } ]
+        - [ 'private_network', { ip: '192.168.88.100' } ]
+  - name: slave
+    run_list:
+      - recipe[pw_testhelper]
+      - recipe[pw_jenkins::slave]
+    attributes:
+      pw_jenkins:
+        slave:
+          master_url: 'http://192.168.88.100:8080/jenkins'
+          name: 'jkslave'
+    driver:
+      network:
+        - [ 'private_network', { ip: '192.168.88.200' } ]

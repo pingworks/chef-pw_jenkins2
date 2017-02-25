@@ -1,0 +1,98 @@
+#!/bin/sh
+
+### BEGIN INIT INFO
+# Provides:
+# Required-Start:    $remote_fs $syslog $network
+# Required-Stop:     $remote_fs $syslog $network
+# Should-Start:      $named
+# Default-Start:     2 3 4 5
+# Default-Stop:      0 1 6
+# Short-Description: jenkins swarm slave
+# Description:       jenkins swarm slave
+### END INIT INFO
+set -e
+
+. /lib/lsb/init-functions
+
+NAME=jenkins-swarm-slave
+USER=jenkins
+HOME="<%= node['pw_jenkins']['slave']['home'] %>"
+JAR="${HOME}/swarm-slave.jar"
+JAVA_ARGS=""
+LOG="/var/log/jenkins/${NAME}.log"
+MASTER=<%= node['pw_jenkins']['slave']['master_url'] %>
+USERNAME=<%= node['pw_jenkins']['slave']['jenkins_ui_user'] %>
+PASSWORD=<%= node['pw_jenkins']['slave']['jenkins_ui_password'] %>
+
+# Swarm slave option
+DESCRIPTION="Jenkins Swarm Slave Description missing.."
+EXECUTORS=<%= node['pw_jenkins']['slave']['executors'] %>
+FSROOT=${HOME}
+LABELS="Swarm <%= node['pw_jenkins']['slave']['labels'] %>"
+CLIENTOPTIONS=""
+
+# Read defaults
+. /etc/default/${NAME}
+
+OPTS="-description \"${DESCRIPTION}\" \
+      -executors ${EXECUTORS} \
+      -master ${MASTER} \
+      -fsroot ${FSROOT} \
+      -labels \"${LABELS}\"\
+      $CLIENTOPTIONS"
+
+if [ -n "$CLIENTNAME" ]; then
+  OPTS="${OPTS} \
+          -name ${CLIENTNAME}"
+fi
+if [ -n "$USERNAME" ] && [ -n "$PASSWORD" ]; then
+  OPTS="${OPTS} \
+          -username ${USERNAME} \
+          -password ${PASSWORD}"
+fi
+
+PIDFILE="/var/run/${NAME}.pid"
+ARGS="${JAVA_ARGS} -server -Djava.awt.headless=true -jar $JAR $OPTS"
+JAVA_HOME="/etc/alternatives/java"
+DAEMON="/usr/bin/java"
+
+test -x $DAEMON || exit 1
+
+case $1 in
+  start)
+    sleep 5
+    # check for stale pid file
+    if [ ! -e $PIDFILE ]; then
+      log_daemon_msg "Starting Jenkins Swarm Slave"
+      start-stop-daemon --start --quiet --chuid $USER --background --make-pidfile --pidfile $PIDFILE --exec /bin/bash -- -c "exec $DAEMON $ARGS > ${LOG} 2>&1"
+      log_end_msg $?
+    fi
+    ;;
+  stop)
+    # check for stale pid file
+    if [ -e $PIDFILE ] && ! kill -0 $(cat $PIDFILE) > /dev/null 2>&1; then
+      rm -f $PIDFILE
+    fi
+    if [ -e $PIDFILE ]; then
+      log_daemon_msg "Stopping Jenkins Swarm Slave"
+      start-stop-daemon --stop --quiet --pidfile $PIDFILE
+      log_end_msg $?
+      rm -f $PIDFILE
+    fi
+    ;;
+  restart)
+    $0 stop
+    sleep 2
+    $0 start
+    ;;
+  status)
+    status_of_proc -p $PIDFILE "$DAEMON" ${NAME}
+    RETVAL=$?
+    ;;
+
+  *)
+    echo "Usage: $0 {start|stop|restart|status}"
+    exit 1
+esac
+
+exit 0

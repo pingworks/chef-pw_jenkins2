@@ -1,0 +1,17 @@
+# Defaults for jenkins swarm slave
+
+# USER=jenkins
+# HOME="/var/lib/jenkins"
+# JAR="${HOME}/swarm-slave.jar"
+# LOG="/var/log/${NAME}.log"
+# USERNAME=<%= node['pw_jenkins']['slave']['jenkins_ui_user'] %>
+# PASSWORD=<%= node['pw_jenkins']['slave']['jenkins_ui_password'] %>
+# FSROOT=${HOME}
+
+JAVA_ARGS="<%= node['pw_jenkins']['slave']['jvm_options'] %>"
+DESCRIPTION="Jenkins Swarm Slave Description missing.."
+MASTER=<%= node['pw_jenkins']['slave']['master_url'] %>
+EXECUTORS=<%= node['pw_jenkins']['slave']['executors'] %>
+LABELS="Swarm <%= node['pw_jenkins']['slave']['labels'] %>"
+CLIENTNAME="<%= node['pw_jenkins']['slave']['name'] %>"
+CLIENTOPTIONS="<%= node['pw_jenkins']['slave']['options'] %>"
