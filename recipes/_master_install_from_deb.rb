@@ -21,35 +21,35 @@ include_recipe 'apt::default'
 
 package 'daemon'
 package 'unzip'
-node['pw_jenkins']['master']['source']
+node['pw_jenkins2']['master']['source']
 
 
-Chef::Log.info("Downloading jenkins deb from #{node['pw_jenkins']['master']['source']} to #{Chef::Config[:file_cache_path]}/jenkins_#{node['pw_jenkins']['master']['version']}_all.deb")
+Chef::Log.info("Downloading jenkins deb from #{node['pw_jenkins2']['master']['source']} to #{Chef::Config[:file_cache_path]}/jenkins_#{node['pw_jenkins2']['master']['version']}_all.deb")
 
 # Download the remote DEB file
-remote_file "#{Chef::Config[:file_cache_path]}/jenkins_#{node['pw_jenkins']['master']['version']}_all.deb" do
-  source   node['pw_jenkins']['master']['source']
-  checksum node['pw_jenkins']['master']['checksum'] if node['pw_jenkins']['master']['checksum']
+remote_file "#{Chef::Config[:file_cache_path]}/jenkins_#{node['pw_jenkins2']['master']['version']}_all.deb" do
+  source   node['pw_jenkins2']['master']['source']
+  checksum node['pw_jenkins2']['master']['checksum'] if node['pw_jenkins2']['master']['checksum']
   action :create_if_missing
 end
 
 # install the prerequisites for the jenkins-package
 package 'psmisc'
 
-dpkg_package "jenkins_#{node['pw_jenkins']['master']['version']}_all.deb" do
+dpkg_package "jenkins_#{node['pw_jenkins2']['master']['version']}_all.deb" do
   options '--force-confdef'
-  source "#{Chef::Config[:file_cache_path]}/jenkins_#{node['pw_jenkins']['master']['version']}_all.deb"
-  version node['pw_jenkins']['master']['version']
+  source "#{Chef::Config[:file_cache_path]}/jenkins_#{node['pw_jenkins2']['master']['version']}_all.deb"
+  version node['pw_jenkins2']['master']['version']
   notifies :restart, 'service[jenkins]', :delayed
 end
 
-template "#{node['pw_jenkins']['master']['home']}/jenkins.install.InstallUtil.lastExecVersion" do
+template "#{node['pw_jenkins2']['master']['home']}/jenkins.install.InstallUtil.lastExecVersion" do
   owner 'jenkins'
   group 'jenkins'
   mode 00644
 end
 
-cookbook_file "#{node['pw_jenkins']['master']['home']}/config.xml" do
+cookbook_file "#{node['pw_jenkins2']['master']['home']}/config.xml" do
   owner 'jenkins'
   group 'jenkins'
   mode 00644

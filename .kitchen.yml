@@ -22,7 +22,7 @@ suites:
   - name: master
     run_list:
       - recipe[pw_testhelper]
-      - recipe[pw_jenkins::master]
+      - recipe[pw_jenkins2::master]
     attributes:
     driver:
       network:
@@ -31,9 +31,9 @@ suites:
   - name: slave
     run_list:
       - recipe[pw_testhelper]
-      - recipe[pw_jenkins::slave]
+      - recipe[pw_jenkins2::slave]
     attributes:
-      pw_jenkins:
+      pw_jenkins2:
         slave:
           master_url: 'http://192.168.88.100:8080/jenkins'
           name: 'jkslave'

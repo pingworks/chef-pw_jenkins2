@@ -1,1 +1,1 @@
-include_recipe 'pw_jenkins::master'
+include_recipe 'pw_jenkins2::master'

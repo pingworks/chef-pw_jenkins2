@@ -16,19 +16,19 @@ set -e
 
 NAME=jenkins-swarm-slave
 USER=jenkins
-HOME="<%= node['pw_jenkins']['slave']['home'] %>"
+HOME="<%= node['pw_jenkins2']['slave']['home'] %>"
 JAR="${HOME}/swarm-slave.jar"
 JAVA_ARGS=""
 LOG="/var/log/jenkins/${NAME}.log"
-MASTER=<%= node['pw_jenkins']['slave']['master_url'] %>
-USERNAME=<%= node['pw_jenkins']['slave']['jenkins_ui_user'] %>
-PASSWORD=<%= node['pw_jenkins']['slave']['jenkins_ui_password'] %>
+MASTER=<%= node['pw_jenkins2']['slave']['master_url'] %>
+USERNAME=<%= node['pw_jenkins2']['slave']['jenkins_ui_user'] %>
+PASSWORD=<%= node['pw_jenkins2']['slave']['jenkins_ui_password'] %>
 
 # Swarm slave option
 DESCRIPTION="Jenkins Swarm Slave Description missing.."
-EXECUTORS=<%= node['pw_jenkins']['slave']['executors'] %>
+EXECUTORS=<%= node['pw_jenkins2']['slave']['executors'] %>
 FSROOT=${HOME}
-LABELS="Swarm <%= node['pw_jenkins']['slave']['labels'] %>"
+LABELS="Swarm <%= node['pw_jenkins2']['slave']['labels'] %>"
 CLIENTOPTIONS=""
 
 # Read defaults

@@ -1,10 +1,10 @@
-name             'pw_jenkins'
+name             'pw_jenkins2'
 maintainer       'Christoph Lukas'
 maintainer_email 'christoph.lukas@gmx.net'
 license          'All rights reserved'
 description      'Installs/Configures jenkins'
 long_description 'Installs/Configures jenkins'
-version          '2.0.0'
+version          '0.0.1'
 
 depends 'apt'
 depends 'ark'

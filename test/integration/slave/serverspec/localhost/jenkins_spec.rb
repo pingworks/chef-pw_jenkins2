@@ -17,7 +17,7 @@ describe process('java') do
 end
 
 describe process('java') do
-  its(:args) { should match "-master #{$node['pw_jenkins']['slave']['master_url']}" }
+  its(:args) { should match "-master #{$node['pw_jenkins2']['slave']['master_url']}" }
 end
 
 describe process('java') do
@@ -32,6 +32,6 @@ describe user('jenkins') do
   it { should have_home_directory '/var/lib/jenkins' }
 end
 
-describe command("wget -O - \"#{$node['pw_jenkins']['slave']['master_url']}/computer/#{$node['pw_jenkins']['slave']['name']}\"") do
+describe command("wget -O - \"#{$node['pw_jenkins2']['slave']['master_url']}/computer/#{$node['pw_jenkins2']['slave']['name']}\"") do
   its(:stdout) { should match /#{$node['ipaddress']}.*Connected via JNLP agent./ }
 end

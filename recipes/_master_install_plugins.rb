@@ -1,6 +1,6 @@
 # Install Jenkins plugins
 
-template "#{node['pw_jenkins']['master']['home']}/hudson.model.UpdateCenter.xml" do
+template "#{node['pw_jenkins2']['master']['home']}/hudson.model.UpdateCenter.xml" do
   source   'hudson.model.UpdateCenter.erb'
   mode     '0644'
 end
@@ -14,7 +14,7 @@ end
 # Please define the exact plugin_list in the attributes/default.rb file
 
 plugins_to_be_installed = []
-node['pw_jenkins']['master']['plugin_list'].each_with_index do |plugin, _i|
+node['pw_jenkins2']['master']['plugin_list'].each_with_index do |plugin, _i|
   plugin_version_installed = ''
   plugin_manifest = "/var/lib/jenkins/plugins/#{plugin[0]}/META-INF/MANIFEST.MF"
   if File.file?(plugin_manifest)
@@ -42,7 +42,7 @@ node['pw_jenkins']['master']['plugin_list'].each_with_index do |plugin, _i|
 end
 
 plugins_to_be_installed.each_with_index do |plugin, i|
-  baseurl = node['pw_jenkins']['master']['plugin_baseurl']
+  baseurl = node['pw_jenkins2']['master']['plugin_baseurl']
   plugin[2].nil? || baseurl = plugin[2]
   Chef::Log.info "Now installing Jenkins Plugin #{plugin[0]}@#{plugin[1]} from #{baseurl}"
   remote_file "/var/lib/jenkins/plugins/#{plugin[0]}.hpi" do

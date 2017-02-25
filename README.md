@@ -1,4 +1,4 @@
-# pw_jenkins-cookbook
+# pw_jenkins2-cookbook
 
 Installs jenkins
 
@@ -16,7 +16,7 @@ Ubuntu 14.04
     <th>Default</th>
   </tr>
   <tr>
-    <td><tt>['pw_jenkins']['bacon']</tt></td>
+    <td><tt>['pw_jenkins2']['bacon']</tt></td>
     <td>Boolean</td>
     <td>whether to include bacon</td>
     <td><tt>true</tt></td>
@@ -27,12 +27,12 @@ Ubuntu 14.04
 
 ### jenkins::default
 
-Include `pw_jenkins` in your node's `run_list`:
+Include `pw_jenkins2` in your node's `run_list`:
 
 ```json
 {
   "run_list": [
-    "recipe[pw_jenkins::default]"
+    "recipe[pw_jenkins2::default]"
   ]
 }
 ```

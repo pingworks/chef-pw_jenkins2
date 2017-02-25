@@ -1,8 +1,8 @@
 # jenkins slave:
-swarm_jar = node['pw_jenkins']['slave']['swarm_jar']
-swarm_url = "#{node['pw_jenkins']['slave']['swarm_base_url']}/#{node['pw_jenkins']['slave']['swarm_jar']}"
-slave_home = node['pw_jenkins']['slave']['home']
-slave_shell = node['pw_jenkins']['slave']['shell']
+swarm_jar = node['pw_jenkins2']['slave']['swarm_jar']
+swarm_url = "#{node['pw_jenkins2']['slave']['swarm_base_url']}/#{node['pw_jenkins2']['slave']['swarm_jar']}"
+slave_home = node['pw_jenkins2']['slave']['home']
+slave_shell = node['pw_jenkins2']['slave']['shell']
 username = 'jenkins'
 
 # setup jenkins user and home
@@ -36,11 +36,11 @@ template '/etc/init.d/jenkins-swarm-slave' do
 end
 
 template '/etc/default/jenkins-swarm-slave' do
-  if node['pw_jenkins']['slave']['name'] == '' \
+  if node['pw_jenkins2']['slave']['name'] == '' \
     && node.key?('pw_base') \
     && node['pw_base'].key?('cname') \
     && node['pw_base']['cname'] != ''
-    node.default['pw_jenkins']['slave']['name'] = node['pw_base']['cname']
+    node.default['pw_jenkins2']['slave']['name'] = node['pw_base']['cname']
   end
   source 'slave_default_file.erb'
   mode '0644'
