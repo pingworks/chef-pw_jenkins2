@@ -13,7 +13,7 @@ provisioner:
   require_chef_omnibus: false
 
 platforms:
-    - name: ubuntu-14.04
+    - name: ubuntu-16.04
       driver:
         gui: true
         box: pingworks_ubuntu-16.04_chef-12.7.2-1
