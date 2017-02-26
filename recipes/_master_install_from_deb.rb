@@ -23,7 +23,6 @@ package 'daemon'
 package 'unzip'
 node['pw_jenkins2']['master']['source']
 
-
 Chef::Log.info("Downloading jenkins deb from #{node['pw_jenkins2']['master']['source']} to #{Chef::Config[:file_cache_path]}/jenkins_#{node['pw_jenkins2']['master']['version']}_all.deb")
 
 # Download the remote DEB file
@@ -84,7 +83,7 @@ end
 
 service 'jenkins' do
   supports status: true, restart: true, reload: true
-  action  [:enable, :start]
+  action [:enable, :start]
 end
 
 directory '/var/lib/jenkins/build.properties' do

@@ -1,5 +1,5 @@
 Metrics/LineLength:
-  Max: 180
+  Enabled: false
 
 Style/GlobalVars:
   Exclude:

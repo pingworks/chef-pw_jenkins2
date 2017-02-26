@@ -41,7 +41,7 @@ node['pw_jenkins2']['master']['plugin_list'].each_with_index do |plugin, _i|
   end
 end
 
-plugins_to_be_installed.each_with_index do |plugin, i|
+plugins_to_be_installed.each_with_index do |plugin, _i|
   baseurl = node['pw_jenkins2']['master']['plugin_baseurl']
   plugin[2].nil? || baseurl = plugin[2]
   Chef::Log.info "Now installing Jenkins Plugin #{plugin[0]}@#{plugin[1]} from #{baseurl}"
@@ -50,7 +50,7 @@ plugins_to_be_installed.each_with_index do |plugin, i|
   end
 end
 
-if (plugins_to_be_installed.size >= 0) then
+if plugins_to_be_installed.size >= 0
   execute 'restart-jenkins' do
     command 'echo w00t'
     notifies :restart, 'service[jenkins]', :immediately

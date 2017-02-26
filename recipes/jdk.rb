@@ -1,8 +1,8 @@
-package 'openjdk-7-jdk' do
+package 'openjdk-8-jdk' do
   options '--no-install-recommends'
 end
 
-jdk_dir = "java-7-openjdk-amd64"
+jdk_dir = "java-8-openjdk-amd64"
 link '/usr/lib/jvm/default-java' do
   to "/usr/lib/jvm/#{jdk_dir}"
 end
