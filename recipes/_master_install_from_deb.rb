@@ -52,6 +52,7 @@ cookbook_file "#{node['pw_jenkins2']['master']['home']}/config.xml" do
   owner 'jenkins'
   group 'jenkins'
   mode 00644
+  not_if { ::File.exist? '/var/lib/jenkins/dirty' }
 end
 
 # cp jenkins-cli.jar to /usr/local/lib/jenkins/jenkins-cli.jar
@@ -79,6 +80,7 @@ template '/etc/default/jenkins' do
   source   'jenkins-config-debian.erb'
   mode     '0644'
   notifies :restart, 'service[jenkins]', :delayed
+  not_if { ::File.exist? '/var/lib/jenkins/dirty' }
 end
 
 service 'jenkins' do
