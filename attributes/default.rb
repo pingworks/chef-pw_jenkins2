@@ -48,7 +48,7 @@ default['pw_jenkins2']['master']['plugin_list'] = [
   ['conditional-buildstep', '1.3.5'],
   ['credentials-binding', '1.11'],
   ['credentials', '2.1.13'],
-  ['dashboardintegration', '481+git9308315'],
+  ['dashboardintegration', '481+git9308315', 'https://dash.pingworks.net/repo/master/dash.481.9308315/artifacts/dashboardintegration.hpi'],
   ['display-url-api', '1.1.1'],
   ['docker-commons', '1.6'],
   ['docker-workflow', '1.10'],
