@@ -4,7 +4,7 @@ maintainer_email 'christoph.lukas@gmx.net'
 license          'All rights reserved'
 description      'Installs/Configures jenkins'
 long_description 'Installs/Configures jenkins'
-version          '0.0.8'
+version          '0.0.9'
 
 depends 'apt'
 depends 'ark'
