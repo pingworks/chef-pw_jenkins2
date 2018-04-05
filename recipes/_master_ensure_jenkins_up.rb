@@ -2,7 +2,7 @@ bash 'ensure jenkins is up and running' do
   user 'root'
   cwd '/tmp'
   code <<-EOH
-  WAITMAX=30
+  WAITMAX=90
   I=0
   JENKINS_UP=0
   while [ $I -le $WAITMAX ];do
